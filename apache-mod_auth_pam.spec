@@ -12,11 +12,11 @@ Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	b1e36b5df18a177e671785f7f4c8001c
 Patch0:		%{name}-symbol_fix.patch
+URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
 PreReq:		%{_sbindir}/apxs
 Requires:	apache(EAPI)
-URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
