@@ -11,7 +11,7 @@ License:	GPL
 Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	561a495f27e6cc810641bd6ce6db3d02
-#Patch0:		%{name}-symbol_fix.patch
+Patch0:		%{name}-missing_constant.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2
@@ -38,7 +38,7 @@ diretório PAM.
 
 %prep
 %setup -q -n mod_%{mod_name}/apache-2.0
-#%patch -p1
+%patch0 -p0
 
 %build
 %{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.so   -lpam
