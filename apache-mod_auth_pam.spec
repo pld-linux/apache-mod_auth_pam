@@ -42,7 +42,7 @@ diretório PAM.
 %patch0 -p0
 
 %build
-%{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.la   -lpam
+%{apxs} -c mod_%{mod_name}2.c	-o mod_%{mod_name}2.la	 -lpam
 %{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.la -lpam
 
 %install
