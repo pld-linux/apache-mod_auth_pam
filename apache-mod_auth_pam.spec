@@ -1,5 +1,6 @@
 %define		mod_name	auth_pam
 Summary:	This is the PAM authentication module for Apache
+Summary(pl):	Modu³ autentykacji PAM dla Apache
 Name:		apache-mod_%{mod_name}
 Version:	1.0a
 Release:	1
@@ -21,6 +22,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 This is an authentication module for Apache that allows you to
 authenticate HTTP clients using PAM (pluggable authentication module).
+
+%description -l pl
+To jest modu³ autentykacji dla Apache pozwalaj±cy na autentykacjê
+klientów HTTP przez PAM.
 
 %prep 
 %setup -q -n mod_%{mod_name}-%{version}
