@@ -10,6 +10,7 @@ Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-%{version}.tar.gz
+# Source0-md5:	b1e36b5df18a177e671785f7f4c8001c
 Patch0:		%{name}-symbol_fix.patch
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
