@@ -14,9 +14,9 @@ Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-%{versi
 #Patch0:		%{name}-symbol_fix.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
-BuildRequires:	apache(EAPI)-devel
+BuildRequires:	apache-devel >= 2
 Requires(post,preun):	%{apxs}
-Requires:	apache(EAPI)
+Requires:	apache >= 2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
