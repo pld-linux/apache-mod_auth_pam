@@ -19,7 +19,7 @@ BuildRequires:	apache-devel >= 2
 Requires:	apache >= 2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir	/etc/httpd
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
 
 %description
