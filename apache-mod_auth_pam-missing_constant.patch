@@ -1,0 +1,11 @@
+--- mod_auth_pam2.c	2004-08-28 00:30:23.966116280 +0200
++++ mod_auth_pam2.c	2004-08-28 00:30:28.804380752 +0200
+@@ -161,6 +161,8 @@
+     char *name, *pw;
+ }      auth_pam_userinfo;
+ 
++static const char *pam_servicename = "httpd";
++
+ /*
+  * Solaris 2.6.x has a broken conversation function and needs this
+  * as a global variable
