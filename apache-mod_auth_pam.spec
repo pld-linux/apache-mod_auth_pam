@@ -6,19 +6,20 @@ Summary(pl):	Modu³ uwierzytelnienia PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	2.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-%{version}.tar.gz
 # Source0-md5:	561a495f27e6cc810641bd6ce6db3d02
+Source1:	apache-mod_auth_pam.conf
 Patch0:		%{name}-missing_constant.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2
-Requires(post,preun):	%{apxs}
 Requires:	apache >= 2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_sysconfdir	/etc/httpd
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
 
 %description
@@ -46,25 +47,22 @@ diretório PAM.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}/httpd.conf/}
 
 install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
 install ../samples/httpd- $RPM_BUILD_ROOT/etc/pam.d/httpd
+install %SOURCE1 $RPM_BUILD_ROOT/%{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%{apxs} -e -a -n %{mod_name}2   %{_pkglibdir}/mod_%{mod_name}2.so   1>&2
-%{apxs} -e -a -n auth_etc_group %{_pkglibdir}/mod_auth_etc_group.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
 	/etc/rc.d/init.d/httpd restart 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n %{mod_name}2   %{_pkglibdir}/mod_%{mod_name}2.so   1>&2
-	%{apxs} -e -A -n auth_etc_group %{_pkglibdir}/mod_auth_etc_group.so 1>&2
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
@@ -74,4 +72,5 @@ fi
 %defattr(644,root,root,755)
 %doc ../doc/{configure,faq}.txt ../samples/dot-htaccess ../README
 %config(noreplace) /etc/pam.d/httpd
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/httpd.conf/*_mod_auth_pam.conf
 %attr(755,root,root) %{_pkglibdir}/*.so
