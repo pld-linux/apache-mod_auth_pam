@@ -8,6 +8,7 @@ Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
 Group(pl):	Sieciowe/Serwery
 Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}.tar.gz
+Patch0:		%{name}-symbol_fix.patch
 BuildRequires:	/usr/sbin/apxs
 BuildRequires:	apache(EAPI)-devel
 Prereq:		/usr/sbin/apxs
@@ -23,6 +24,7 @@ authenticate HTTP clients using PAM (pluggable authentication module).
 
 %prep 
 %setup -q -n mod_%{mod_name}-%{version}
+%patch -p1
 
 %build
 /usr/sbin/apxs -c mod_%{mod_name}.c -o mod_%{mod_name}.so -lpam -ldl
