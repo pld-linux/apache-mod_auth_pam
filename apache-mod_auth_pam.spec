@@ -6,14 +6,14 @@ Summary(pl):	Modu³ autentykacji PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	1.0a
-Release:	3
+Release:	4
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}.tar.gz
 Patch0:		%{name}-symbol_fix.patch
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
-Prereq:		%{_sbindir}/apxs
+PreReq:		%{_sbindir}/apxs
 Requires:	apache(EAPI)
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -68,3 +68,4 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_pkglibdir}/*
+%doc doc samples README
