@@ -35,7 +35,7 @@ klientów HTTP przez PAM.
 Este módulo permite que você autentique clientes HTTP usando o
 diretório PAM.
 
-%prep 
+%prep
 %setup -q -n mod_%{mod_name}-%{version}
 %patch -p1
 
