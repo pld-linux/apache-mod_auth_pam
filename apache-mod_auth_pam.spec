@@ -6,7 +6,7 @@ Summary(pl):	Modu³ autentykacji PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	1.0a
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Group(cs):	Sí»ové/Démoni
