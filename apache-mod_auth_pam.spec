@@ -41,8 +41,8 @@ diretório PAM.
 %patch0 -p0
 
 %build
-%{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.so   -lpam -Wl,-shared
-%{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.so -lpam -Wl,-shared
+%{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.so   -lpam -Wc,-fPIC -Wl,-shared
+%{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.so -lpam -Wc,-fPIC -Wl,-shared
 
 %install
 rm -rf $RPM_BUILD_ROOT
