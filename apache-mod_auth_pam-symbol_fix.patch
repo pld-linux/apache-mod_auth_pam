@@ -1,0 +1,11 @@
+--- mod_auth_pam-1.0a/mod_auth_pam.c~	Sun Feb 13 23:16:57 2000
++++ mod_auth_pam-1.0a/mod_auth_pam.c	Tue May 29 01:14:17 2001
+@@ -505,7 +505,7 @@
+   return AUTH_REQUIRED;
+ }
+ 
+-module pam_auth_module = {
++module auth_pam_module = {
+   STANDARD_MODULE_STUFF,
+   auth_pam_init,                        /* initializer */
+   create_auth_pam_dir_config,  /* dir config creater */
