@@ -41,14 +41,14 @@ diretório PAM.
 %patch0 -p0
 
 %build
-%{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.so   -lpam -Wc,-fPIC -Wl,-shared
-%{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.so -lpam -Wc,-fPIC -Wl,-shared
+%{apxs} -c mod_%{mod_name}2.c   -o mod_%{mod_name}2.la   -lpam
+%{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.la -lpam
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d}
 
-install mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
+install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
 install ../samples/httpd- $RPM_BUILD_ROOT/etc/pam.d/httpd
 
 %clean
