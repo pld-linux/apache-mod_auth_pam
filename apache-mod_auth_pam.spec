@@ -5,11 +5,11 @@ Summary(es):	Este módulo proporciona autenticación PAM para Apache
 Summary(pl):	Modu³ autentykacji PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
-Version:	1.0a
-Release:	4
+Version:	1.1.1
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}.tar.gz
+Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-%{version}.tar.gz
 Patch0:		%{name}-symbol_fix.patch
 BuildRequires:	%{apxs}
 BuildRequires:	apache(EAPI)-devel
@@ -44,9 +44,10 @@ diretório PAM.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_pkglibdir}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d}
 
 install mod_%{mod_name}.so $RPM_BUILD_ROOT%{_pkglibdir}
+install samples/httpd- $RPM_BUILD_ROOT/etc/pam.d/httpd
 
 %post
 %{apxs} -e -a -n %{mod_name} %{_pkglibdir}/mod_%{mod_name}.so 1>&2
@@ -67,5 +68,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc samples README
+%doc doc/{configure,faq}.txt samples/dot-htaccess README
+%config(noreplace) /etc/pam.d/httpd
 %attr(755,root,root) %{_pkglibdir}/*
