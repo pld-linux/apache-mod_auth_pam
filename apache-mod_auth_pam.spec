@@ -25,7 +25,7 @@ authenticate HTTP clients using user entries in an samba directory.
 %setup -q -n mod_%{mod_name}-%{version}
 
 %build
-%{_sbindir}/apxs -c mod_%{mod_name}.c -o mod_%{mod_name}.so
+/usr/sbin/apxs -c mod_%{mod_name}.c -o mod_%{mod_name}.so
 
 %install
 rm -rf $RPM_BUILD_ROOT
