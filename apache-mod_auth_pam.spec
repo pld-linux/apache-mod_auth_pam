@@ -19,13 +19,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 This is an authentication module for Apache that allows you to
-authenticate HTTP clients using user entries in an samba directory.
+authenticate HTTP clients using PAM (pluggable authentication module).
 
 %prep 
 %setup -q -n mod_%{mod_name}-%{version}
 
 %build
-/usr/sbin/apxs -c mod_%{mod_name}.c -o mod_%{mod_name}.so
+/usr/sbin/apxs -c mod_%{mod_name}.c -o mod_%{mod_name}.so -lpam -ldl
 
 %install
 rm -rf $RPM_BUILD_ROOT
