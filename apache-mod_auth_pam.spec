@@ -16,6 +16,7 @@ Patch0:		%{name}-missing_constant.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2
+BuildRequires:	pam-devel
 Requires:	apache >= 2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
