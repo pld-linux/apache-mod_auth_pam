@@ -6,7 +6,7 @@ Summary(pl):	Modu³ uwierzytelnienia PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	2.0
-Release:	4
+Release:	5
 License:	GPL
 Group:		Networking/Daemons
 Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-%{version}.tar.gz
@@ -15,13 +15,14 @@ Source1:	apache-mod_auth_pam.conf
 Patch0:		%{name}-missing_constant.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
-BuildRequires:	apache-devel >= 2
+BuildRequires:	apache-devel >= 2.0
 BuildRequires:	pam-devel
-Requires:	apache >= 2
+Requires:	apache(modules-api) = %apache_modules_api
+Requires:	apache >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR)
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR)
+%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
 
 %description
 This is an authentication module for Apache that allows you to
