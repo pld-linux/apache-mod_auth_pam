@@ -75,6 +75,6 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc doc/{configure,faq}.txt samples/dot-htaccess README
-%config(noreplace) /etc/pam.d/httpd
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_auth_pam.conf
 %attr(755,root,root) %{_pkglibdir}/*.so
+%config(noreplace) /etc/pam.d/httpd
