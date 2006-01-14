@@ -5,14 +5,14 @@ Summary(es):	Este módulo proporciona autenticación PAM para Apache
 Summary(pl):	Modu³ uwierzytelnienia PAM dla Apache
 Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
-Version:	2.0
-Release:	5
+Version:	1.1.1
+Release:	1
+Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-%{version}.tar.gz
-# Source0-md5:	561a495f27e6cc810641bd6ce6db3d02
+Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-2.0-%{version}.tar.gz
+# Source0-md5:	ab873520ddd2fee7d480dfd53e464e0a
 Source1:	apache-mod_auth_pam.conf
-Patch0:		%{name}-missing_constant.patch
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0
@@ -41,20 +41,17 @@ diretório PAM.
 
 %prep
 %setup -q -n mod_%{mod_name}
-cd apache-2.0
-%patch0 -p0
 
 %build
-cd apache-2.0
-%{apxs} -c mod_%{mod_name}2.c	-o mod_%{mod_name}2.la	 -lpam
-%{apxs} -c mod_auth_etc_group.c -o mod_auth_etc_group.la -lpam
+%{apxs} -c mod_%{mod_name}.c	-o mod_%{mod_name}.la	 -lpam
+%{apxs} -c mod_auth_sys_group.c -o mod_auth_sys_group.la -lpam
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}/httpd.conf}
 
-install apache-2.0/.libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
-install samples/httpd- $RPM_BUILD_ROOT/etc/pam.d/httpd
+install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
+install samples/httpd $RPM_BUILD_ROOT/etc/pam.d/httpd
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
 
 %clean
@@ -72,9 +69,38 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun -- %{name} < 1.1
+if [ -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf ]; then
+        echo "Saving old configuration as %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave"
+        cp -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave
+        echo "Adjusting configuration for apache-mod_auth_pam >= 1.1"
+        sed -i -e '{ s/pam_auth_module/auth_pam_module/g; s/etc_group_auth_module/auth_sys_group_module/g; s/mod_auth_pam2.so/mod_auth_pam.so/g; s/mod_auth_etc_group.so/mod_auth_sys_group.so/g; }' %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
+
+        # we have to do part of %post here to have ircd working after upgrade from 2.10.x to 2.11.x
+	if [ -f /var/lock/subsys/httpd ]; then
+		/etc/rc.d/init.d/httpd restart 1>&2
+	fi
+fi
+
+# This shouldn't be here, but someone has used version 2.0 in spec when real
+# version was 1.0a. Since it was built as 2.0 I don't see other way to perform
+# clean upgrade. This trigger may be a problem when real 2.0 will be out.
+%triggerpostun -- %{name} >= 2.0
+if [ -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf ]; then
+        echo "Saving old configuration as %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave"
+        cp -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave
+        echo "Adjusting configuration for apache-mod_auth_pam >= 1.1"
+        sed -i -e '{ s/pam_auth_module/auth_pam_module/g; s/etc_group_auth_module/auth_sys_group_module/g; s/mod_auth_pam2.so/mod_auth_pam.so/g; s/mod_auth_etc_group.so/mod_auth_sys_group.so/g; }' %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
+
+        # we have to do part of %post here to have ircd working after upgrade from 2.10.x to 2.11.x
+	if [ -f /var/lock/subsys/httpd ]; then
+		/etc/rc.d/init.d/httpd restart 1>&2
+	fi
+fi
+
 %files
 %defattr(644,root,root,755)
-%doc doc/{configure,faq}.txt samples/dot-htaccess README
+%doc doc/{configure,faq}.html samples/dot-htaccess README
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_auth_pam.conf
 %attr(755,root,root) %{_pkglibdir}/*.so
 %config(noreplace) /etc/pam.d/httpd
