@@ -66,20 +66,7 @@ if [ "$1" = "0" ]; then
 	%service -q httpd restart
 fi
 
-%triggerpostun -- %{name} < 1.1
-if [ -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf ]; then
-	echo "Saving old configuration as %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave"
-	cp -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave
-	echo "Adjusting configuration for apache-mod_auth_pam >= 1.1"
-	sed -i -e '{ s/pam_auth_module/auth_pam_module/g; s/etc_group_auth_module/auth_sys_group_module/g; s/mod_auth_pam2.so/mod_auth_pam.so/g; s/mod_auth_etc_group.so/mod_auth_sys_group.so/g; }' %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
-
-	%service -q httpd restart
-fi
-
-# This shouldn't be here, but someone has used version 2.0 in spec when real
-# version was 1.0a. Since it was built as 2.0 I don't see other way to perform
-# clean upgrade. This trigger may be a problem when real 2.0 will be out.
-%triggerpostun -- %{name} >= 2.0
+%triggerpostun -- %{name} < 1:1.1.1-1
 if [ -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf ]; then
 	echo "Saving old configuration as %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave"
 	cp -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave
