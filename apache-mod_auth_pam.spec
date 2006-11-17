@@ -18,7 +18,6 @@ BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0
 BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	apache >= 2.0
 Requires:	apache(modules-api) = %apache_modules_api
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
