@@ -1,9 +1,9 @@
 %define		mod_name	auth_pam
 %define 	apxs		/usr/sbin/apxs
 Summary:	This is the PAM authentication module for Apache
-Summary(es.UTF-8):   Este módulo proporciona autenticación PAM para Apache
-Summary(pl.UTF-8):   Moduł uwierzytelnienia PAM dla Apache
-Summary(pt_BR.UTF-8):   Este módulo provê autenticação PAM para o Apache
+Summary(es.UTF-8):	Este módulo proporciona autenticación PAM para Apache
+Summary(pl.UTF-8):	Moduł uwierzytelnienia PAM dla Apache
+Summary(pt_BR.UTF-8):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	1.1.1
 Release:	1
