@@ -1,9 +1,9 @@
 %define		mod_name	auth_pam
 %define 	apxs		/usr/sbin/apxs
 Summary:	This is the PAM authentication module for Apache
-Summary(es):	Este módulo proporciona autenticación PAM para Apache
-Summary(pl):	Modu³ uwierzytelnienia PAM dla Apache
-Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
+Summary(es.UTF-8):   Este mÃ³dulo proporciona autenticaciÃ³n PAM para Apache
+Summary(pl.UTF-8):   ModuÅ‚ uwierzytelnienia PAM dla Apache
+Summary(pt_BR.UTF-8):   Este mÃ³dulo provÃª autenticaÃ§Ã£o PAM para o Apache
 Name:		apache-mod_%{mod_name}
 Version:	1.1.1
 Release:	1
@@ -28,16 +28,16 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 This is an authentication module for Apache that allows you to
 authenticate HTTP clients using PAM (pluggable authentication module).
 
-%description -l es
-Este módulo permite autenticar clientes HTTP usando el directorio PAM.
+%description -l es.UTF-8
+Este mÃ³dulo permite autenticar clientes HTTP usando el directorio PAM.
 
-%description -l pl
-To jest modu³ uwierzytelnienia dla Apache pozwalaj±cy na
-uwierzytelnianie klientów HTTP przez PAM.
+%description -l pl.UTF-8
+To jest moduÅ‚ uwierzytelnienia dla Apache pozwalajÄ…cy na
+uwierzytelnianie klientÃ³w HTTP przez PAM.
 
-%description -l pt_BR
-Este módulo permite que você autentique clientes HTTP usando o
-diretório PAM.
+%description -l pt_BR.UTF-8
+Este mÃ³dulo permite que vocÃª autentique clientes HTTP usando o
+diretÃ³rio PAM.
 
 %prep
 %setup -q -n mod_%{mod_name}
