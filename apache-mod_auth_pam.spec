@@ -4,15 +4,15 @@ Summary:	This is the PAM authentication module for Apache
 Summary(es.UTF-8):	Este módulo proporciona autenticación PAM para Apache
 Summary(pl.UTF-8):	Moduł uwierzytelnienia PAM dla Apache
 Summary(pt_BR.UTF-8):	Este módulo provê autenticação PAM para o Apache
-Name:		apache-mod_%{mod_name}
+Name:		apache-mod_auth_pam
 Version:	1.1.1
 Release:	1
 Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	http://pam.sourceforge.net/mod_%{mod_name}/dist/mod_%{mod_name}-2.0-%{version}.tar.gz
+Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-2.0-%{version}.tar.gz
 # Source0-md5:	ab873520ddd2fee7d480dfd53e464e0a
-Source1:	apache-mod_auth_pam.conf
+Source1:	%{name}.conf
 URL:		http://pam.sourceforge.net/mod_auth_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.0
