@@ -14,7 +14,7 @@ Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-2.0-%{vers
 # Source0-md5:	ab873520ddd2fee7d480dfd53e464e0a
 Source1:	%{name}.conf
 URL:		http://pam.sourceforge.net/mod_auth_pam/
-BuildRequires:	%{apxs}
+BuildRequires:	apache-apxs >= 2.0
 BuildRequires:	apache-devel >= 2.0
 BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
