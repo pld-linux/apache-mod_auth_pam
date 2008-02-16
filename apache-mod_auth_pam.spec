@@ -6,7 +6,7 @@ Summary(pl.UTF-8):	Moduł uwierzytelnienia PAM dla Apache
 Summary(pt_BR.UTF-8):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_auth_pam
 Version:	1.1.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL
 Group:		Networking/Daemons
@@ -21,8 +21,8 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	apache(modules-api) = %apache_modules_api
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
+%define		apacheconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)/conf.d
+%define		apachelibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
 
 %description
 This is an authentication module for Apache that allows you to
@@ -48,11 +48,11 @@ diretório PAM.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}/httpd.conf}
+install -d $RPM_BUILD_ROOT{%{apachelibdir},/etc/pam.d,%{apacheconfdir}}
 
-install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
+install .libs/mod_*.so $RPM_BUILD_ROOT%{apachelibdir}
 install samples/httpd $RPM_BUILD_ROOT/etc/pam.d/httpd
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
+install %{SOURCE1} $RPM_BUILD_ROOT%{apacheconfdir}/52_mod_auth_pam.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -66,11 +66,11 @@ if [ "$1" = "0" ]; then
 fi
 
 %triggerpostun -- %{name} < 1:1.1.1-1
-if [ -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf ]; then
-	echo "Saving old configuration as %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave"
-	cp -f %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf.rpmsave
+if [ -f %{apacheconfdir}/52_mod_auth_pam.conf ]; then
+	echo "Saving old configuration as %{apacheconfdir}/52_mod_auth_pam.conf.rpmsave"
+	cp -f %{apacheconfdir}/52_mod_auth_pam.conf %{apacheconfdir}/52_mod_auth_pam.conf.rpmsave
 	echo "Adjusting configuration for apache-mod_auth_pam >= 1.1"
-	sed -i -e '{ s/pam_auth_module/auth_pam_module/g; s/etc_group_auth_module/auth_sys_group_module/g; s/mod_auth_pam2.so/mod_auth_pam.so/g; s/mod_auth_etc_group.so/mod_auth_sys_group.so/g; }' %{_sysconfdir}/httpd.conf/52_mod_auth_pam.conf
+	sed -i -e '{ s/pam_auth_module/auth_pam_module/g; s/etc_group_auth_module/auth_sys_group_module/g; s/mod_auth_pam2.so/mod_auth_pam.so/g; s/mod_auth_etc_group.so/mod_auth_sys_group.so/g; }' %{apacheconfdir}/52_mod_auth_pam.conf
 
 	%service -q httpd restart
 fi
@@ -78,6 +78,6 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc doc/{configure,faq}.html samples/dot-htaccess README
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_auth_pam.conf
-%attr(755,root,root) %{_pkglibdir}/*.so
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{apacheconfdir}/*_mod_auth_pam.conf
+%attr(755,root,root) %{apachelibdir}/*.so
 %config(noreplace) /etc/pam.d/httpd
