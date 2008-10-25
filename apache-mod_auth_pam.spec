@@ -9,7 +9,7 @@ Version:	1.1.1
 Release:	2
 Epoch:		1
 License:	GPL
-Group:		Networking/Daemons
+Group:		Networking/Daemons/HTTP
 Source0:	http://pam.sourceforge.net/mod_auth_pam/dist/mod_%{mod_name}-2.0-%{version}.tar.gz
 # Source0-md5:	ab873520ddd2fee7d480dfd53e464e0a
 Source1:	%{name}.conf
