@@ -6,7 +6,7 @@ Summary(pl.UTF-8):	Moduł uwierzytelnienia PAM dla Apache
 Summary(pt_BR.UTF-8):	Este módulo provê autenticação PAM para o Apache
 Name:		apache-mod_auth_pam
 Version:	1.1.1
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL
 Group:		Networking/Daemons/HTTP
